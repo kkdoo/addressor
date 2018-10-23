@@ -6,12 +6,13 @@ class AddressPoolRegenerateService
   EXCLUDE_CHARS = ['O', 'I', 'i'].freeze
   CHARSET = (('a'..'z').to_a + ('A'..'Z').to_a + ('1'..'9').to_a - EXCLUDE_CHARS).freeze
   MAX_ADDRESS_SIZE = 34.freeze
+  POOL_SIZE = 10
 
   def call
-    redis.multi do
-      redis.del(address_pool_key)
-      10.times do
-        redis.lpush(address_pool_key, generate_address)
+    $redis.multi do
+      $redis.del(address_pool_key)
+      POOL_SIZE.times do
+        $redis.lpush(address_pool_key, generate_address)
       end
     end
   end
