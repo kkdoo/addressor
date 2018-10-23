@@ -1,21 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe AddressPoolFetchService, type: :service do
-  let(:service) { described_class.new }
+  let(:user) { create(:user) }
+  let(:service) { described_class.new(user) }
   let(:address_pool_key) { service.send(:address_pool_key) }
 
   context '#call' do
-    it 'return nil if pool is empty' do
-      expect(service.call).to eq(nil)
+    it 'return false if pool is empty' do
+      expect {
+        expect(service.call).to eq(false)
+      }.to_not change { user.address }
     end
 
-    it 'return and remove single address from the pool' do
+    it 'update address from the pool' do
       $redis.lpush(address_pool_key, 'address1')
       $redis.lpush(address_pool_key, 'address2')
 
       expect {
-        expect(service.call).to eq('address2')
+        expect(service.call).to eq(true)
       }.to change { $redis.llen(address_pool_key) }.from(2).to(1)
+      expect(user.address).to eq('address2')
     end
   end
 

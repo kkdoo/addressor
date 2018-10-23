@@ -1,0 +1,10 @@
+<div>
+  <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+</div>
+<div>
+  <%= link_to 'New address', addresses_path, method: :post %>
+</div>
+
+<div><%= current_user.address %></div>
+
+<p><%= flash.notice %></p>
