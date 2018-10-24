@@ -6,20 +6,22 @@ RSpec.describe AddressPoolFetchService, type: :service do
   let(:address_pool_key) { service.send(:address_pool_key) }
 
   context '#call' do
-    it 'return false if pool is empty' do
+    it 'assign error if pool is empty' do
       expect {
-        expect(service.call).to eq(false)
+        service.call
       }.to_not change { user.address }
+      expect(service.error).to match(/Address Pool empty, please try again/)
     end
 
     it 'update address from the pool' do
-      $redis.lpush(address_pool_key, 'address1')
-      $redis.lpush(address_pool_key, 'address2')
+      $redis.lpush(address_pool_key, 'a'*34)
+      $redis.lpush(address_pool_key, 'b'*34)
 
       expect {
-        expect(service.call).to eq(true)
+        service.call
       }.to change { $redis.llen(address_pool_key) }.from(2).to(1)
-      expect(user.address).to eq('address2')
+      expect(user.address).to eq('b'*34)
+      expect(service.error).to be_blank
     end
   end
 

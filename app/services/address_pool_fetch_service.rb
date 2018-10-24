@@ -13,7 +13,7 @@ class AddressPoolFetchService
     address = $redis.lpop(address_pool_key)
     if address
       unless user.update_attributes(address: address)
-        assign_validation_error
+        assign_validation_error(user)
       end
     else
       assign_pool_is_empty_error

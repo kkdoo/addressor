@@ -3,8 +3,8 @@ class AddressPoolRegenerateService
 
   # quote: Uppercase letter "O", uppercase letter "I", lowercase letter "l", and the number "0" are excluded!
   # but we still have lowercase letter "o"?
-  EXCLUDE_CHARS = ['O', 'I', 'i'].freeze
-  CHARSET = (('a'..'z').to_a + ('A'..'Z').to_a + ('1'..'9').to_a - EXCLUDE_CHARS).freeze
+  EXCLUDE_CHARS = ['O', 'I', 'i', '0'].freeze
+  CHARSET = (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a - EXCLUDE_CHARS).freeze
   MAX_ADDRESS_SIZE = 34.freeze
   POOL_SIZE = 10
 
