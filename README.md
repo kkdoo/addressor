@@ -1,24 +1,24 @@
-# README
+# API example
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Login first:
 
-Things you may want to cover:
+`curl -X POST localhost:3000/api/login -u "bob@example.com:123456"`
 
-* Ruby version
+result:
+`{"auth_token":"eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1NDA0NTU5MzV9.XN6xBrwqMXyRm78bdEw4Eu-FEzmDWNu_FGFPPCOA3yk"}`
 
-* System dependencies
+It return "auth_token", pass in rest calls. Note: token will be valid within 1 day.
 
-* Configuration
+Get address for current user:
 
-* Database creation
+`curl -X GET localhost:3000/api/my_address -u "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1NDA0NTU5MzV9.XN6xBrwqMXyRm78bdEw4Eu-FEzmDWNu_FGFPPCOA3yk:"`
 
-* Database initialization
+result:
+`{"id":1,"address":"CjqFGZoccmKFg9nTB95hzmRvWguTdyLWeV"}`
 
-* How to run the test suite
+Update address from pool:
 
-* Services (job queues, cache servers, search engines, etc.)
+`curl -X POST localhost:3000/api/addresses -u "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1NDA0NTU5MzV9.XN6xBrwqMXyRm78bdEw4Eu-FEzmDWNu_FGFPPCOA3yk:"`
 
-* Deployment instructions
-
-* ...
+result:
+`{"error":"Address Pool empty, please try again in 1 Minutes and 22 Seconds"}`
