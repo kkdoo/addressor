@@ -7,17 +7,17 @@ module ExceptionHandler
   included do
     rescue_from ExceptionHandler::DecodeError do |_error|
       render json: {
-        message: "Access denied!. Invalid token supplied."
+        error: "Access denied!. Invalid token supplied."
       }, status: 401
     end
     rescue_from ExceptionHandler::ExpiredSignature do |_error|
       render json: {
-        message: "Access denied!. Token has expired."
+        error: "Access denied!. Token has expired."
       }, status: 401
     end
     rescue_from ExceptionHandler::InvalidCredentials do |_error|
       render json: {
-        message: "Access denied!. Invalid credentials"
+        error: "Access denied!. Invalid credentials"
       }, status: 401
     end
   end

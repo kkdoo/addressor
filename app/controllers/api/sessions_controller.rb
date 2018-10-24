@@ -1,5 +1,5 @@
 class Api::SessionsController < Api::BaseController
-  skip_before_action :authorize_api_request, only: [:create]
+  skip_before_action :authorize_api_request!, only: [:create]
 
   def create
     if ActionController::HttpAuthentication::Basic.has_basic_credentials?(request)
