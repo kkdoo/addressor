@@ -63,3 +63,4 @@ end
 
 gem 'devise'
 gem 'whenever', require: false
+gem 'jwt'

@@ -6,5 +6,12 @@ Rails.application.routes.draw do
   get '/my_address', to: 'addresses#show', as: :my_address
   resource :addresses, only: [:create]
 
+  namespace :api do
+    post '/login', to: 'sessions#create', as: :login
+
+    get '/my_address', to: 'addresses#show', as: :my_address
+    resource :addresses, only: [:create]
+  end
+
   root to: "addresses#show"
 end
